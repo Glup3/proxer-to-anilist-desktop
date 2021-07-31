@@ -1,0 +1,25 @@
+{
+  "name": "proxer-to-anilist",
+  "version": "1.0.0",
+  "description": "Desktop App for converting Proxer List to AniList",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "npm run build && electron ./dist/main.js"
+  },
+  "author": "Phuc Tran",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/Glup3/proxer-to-anilist-desktop"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "electron": "^13.1.7",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
