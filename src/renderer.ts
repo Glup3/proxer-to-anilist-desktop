@@ -7,4 +7,4 @@
  */
 
 import "./index.css";
-import "./app";
+import "./main";
