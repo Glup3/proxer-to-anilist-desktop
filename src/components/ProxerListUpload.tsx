@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 
@@ -39,28 +39,22 @@ const StyledDropzone = styled.div<DragProps>`
   cursor: pointer;
 `;
 
-export const ProxerListUpload: FunctionComponent<{}> = () => {
+interface ProxerListUploadProps {
+  onDrop: (acceptedFiles: File[]) => void;
+}
+
+export const ProxerListUpload: FunctionComponent<ProxerListUploadProps> = ({ onDrop }) => {
   const { acceptedFiles, getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject } = useDropzone({
     maxFiles: 1,
     accept: ".html",
+    onDrop: onDrop,
   });
 
-  const acceptedFileItems = acceptedFiles.map((file) => (
-    <span key={file.path}>
-      {file.name} - {file.size} bytes
-    </span>
-  ));
-
   return (
-    <section className="container">
-      <StyledDropzone {...getRootProps({ isDragAccept, isDragReject, isDragActive })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop your Proxer Profile here, or click to select</p>
-      </StyledDropzone>
-      <aside>
-        <h4>File</h4>
-        {acceptedFileItems}
-      </aside>
-    </section>
+    <StyledDropzone {...getRootProps({ isDragAccept, isDragReject, isDragActive })}>
+      <input {...getInputProps()} />
+      <p>Drag 'n' drop your Proxer Profile here, or click to select</p>
+      <span>Selected File: {acceptedFiles[0] != null ? acceptedFiles[0].name : "none"}</span>
+    </StyledDropzone>
   );
 };
