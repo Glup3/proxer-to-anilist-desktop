@@ -1,13 +1,28 @@
-export const proxerAnimeStati = ["COMPLETED", "WATCHING", "PLANNED", "DROPPED"] as const;
-export type ProxerAnimeStatus = typeof proxerAnimeStati[number];
+export const proxerMediaStati = ["COMPLETED", "CONSUMING", "PLANNED", "DROPPED"] as const;
+export type ProxerMediaStatus = typeof proxerMediaStati[number];
 
 export const proxerAnimeTypes = ["AnimeserieTV", "SpecialOVA", "Movie"] as const;
 export type ProxerAnimeType = typeof proxerAnimeTypes[number];
 
-export interface ProxerAnime {
+export const proxerMangaTypes = [
+  "Mangaserie",
+  "One-Shot",
+  "H-Manga",
+  "MangaserieWebtoon",
+  "One-ShotManhua",
+  "MangaserieManhwa",
+  "Doujinshi",
+] as const;
+export type ProxerMangaType = typeof proxerMangaTypes[number];
+
+export type MediaType = "ANIME" | "MANGA";
+export type ProxerContentType = ProxerAnimeType | ProxerMangaType;
+
+export interface ProxerMedia {
   title: string;
-  episodesWatched: number;
-  episodesCount: number;
-  status: ProxerAnimeStatus;
-  type: ProxerAnimeType | string;
+  amountConsumed: number;
+  totalCount: number;
+  status: ProxerMediaStatus;
+  contentType: ProxerContentType;
+  mediaType: MediaType;
 }

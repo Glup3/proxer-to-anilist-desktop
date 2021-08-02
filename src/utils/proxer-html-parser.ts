@@ -1,32 +1,34 @@
 import cheerio from "cheerio";
-import { ProxerAnime, proxerAnimeStati } from "../types/proxer";
+import { MediaType, ProxerContentType, ProxerMedia, proxerMediaStati } from "../types/proxer";
 
-export const getAnimesFromProxerHTML = (html: string): ProxerAnime[] => {
-  const animes: ProxerAnime[] = [];
+export const getMediasFromProxerHTML = (html: string): ProxerMedia[] => {
+  const medias: ProxerMedia[] = [];
 
   const $ = cheerio.load(html);
-  const animeTables = $("#box-table-a");
+  const mediaTables = $("#box-table-a");
+  const mediaType = $("li.active").first().text();
 
-  animeTables.each((tableIndex, table) => {
+  mediaTables.each((tableIndex, table) => {
     $(table)
       .find("tr[class^=entry]")
       .each((_, tableEntry) => {
         const data = $(tableEntry).find("td[valign=top]");
 
-        const animeName = $(data.get(0)).text().trim();
+        const mediaName = $(data.get(0)).text().trim();
         const episodes = $(data.get(3)).text().split(" / ");
-        const animeType = $(data.get(1)).text();
-        const animeStatus = proxerAnimeStati[tableIndex];
+        const contentType = $(data.get(1)).text();
+        const mediaStatus = proxerMediaStati[tableIndex];
 
-        animes.push({
-          title: animeName,
-          episodesWatched: parseInt(episodes[0], 10),
-          episodesCount: parseInt(episodes[1], 10),
-          type: animeType,
-          status: animeStatus,
+        medias.push({
+          title: mediaName,
+          amountConsumed: parseInt(episodes[0], 10),
+          totalCount: parseInt(episodes[1], 10),
+          contentType: contentType as ProxerContentType,
+          status: mediaStatus,
+          mediaType: mediaType as MediaType,
         });
       });
   });
 
-  return animes;
+  return medias;
 };
