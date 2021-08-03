@@ -26,3 +26,7 @@ export interface ProxerMedia {
   contentType: ProxerContentType;
   mediaType: MediaType;
 }
+
+export interface SelectableProxerMedia extends ProxerMedia {
+  isSelected: boolean;
+}
